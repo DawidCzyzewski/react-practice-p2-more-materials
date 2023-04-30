@@ -2,24 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import { tasksInitialState } from "./reducer";
 import { nanoid } from "nanoid";
 
-export const tasksSlice = createSlice({
-
+const tasksSlice = createSlice({
   name: "tasks",
   initialState: tasksInitialState,
   reducers: {
-       addTask: {
+    addTask: {
       reducer(state, action) {
         state.push(action.payload);
       },
       prepare(text) {
         return {
-          payload: { text, id: nanoid(), completed: false },
+          payload: {
+            id: nanoid(),
+            completed: false,
+            text,
+          },
         };
       },
     },
-    deleteTask(state, action) {
-      return state.filter((task) => task.id !== action.payload);
-    },
+    deleteTask(state, action) {},
     toggleCompleted(state, action) {
       for (const task of state) {
         if (task.id === action.payload) {

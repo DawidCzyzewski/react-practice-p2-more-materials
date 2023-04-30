@@ -1,40 +1,39 @@
-import { useFilter } from "../../contexts/filterContext";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "../Button/Button";
-import styles from "./StatusFilter.module.css";
+import { statusFilters } from "../../redux/constants";
+import { getStatusFilter } from "../../redux/selectors";
+import { setStatusFilter } from "../../redux/actions";
+import css from "./StatusFilter.module.css";
 
-// I want to render Status element:
 export const StatusFilter = () => {
-  // const filters = useFilter()
-  const { status, setStatus, statusFilters } = useFilter();
+  const dispatch = useDispatch();
+  const filter = useSelector(getStatusFilter);
 
-  const filter = status;
+  const handleFilterChange = (filter) => dispatch(setStatusFilter(filter));
 
-  const handleFilterChange = (filter) => setStatus(filter);
   return (
-    <>
-      <div className={styles.wrapper}>
-        <Button
-          onClick={() => handleFilterChange(statusFilters.all)}
-          type="button"
-          selected={filter === statusFilters.all}
-        >
-          All
-        </Button>
-        <Button
-          onClick={() => handleFilterChange(statusFilters.active)}
-          type="button"
-          selected={filter === statusFilters.active}
-        >
-          Active
-        </Button>
-        <Button
-          onClick={() => handleFilterChange(statusFilters.completed)}
-          type="button"
-          selected={filter === statusFilters.completed}
-        >
-          Completed
-        </Button>
-      </div>
-    </>
+    <div className={css.wrapper}>
+      <Button
+        selected={filter === statusFilters.all}
+        onClick={() => {
+          console.log(filter);
+          handleFilterChange(statusFilters.all);
+        }}
+      >
+        All
+      </Button>
+      <Button
+        selected={filter === statusFilters.active}
+        onClick={() => handleFilterChange(statusFilters.active)}
+      >
+        Active
+      </Button>
+      <Button
+        selected={filter === statusFilters.completed}
+        onClick={() => handleFilterChange(statusFilters.completed)}
+      >
+        Completed
+      </Button>
+    </div>
   );
 };

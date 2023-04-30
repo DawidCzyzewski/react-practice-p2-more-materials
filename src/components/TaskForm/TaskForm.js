@@ -1,18 +1,18 @@
-import css from "./TaskForm.module.css";
-
+import { useDispatch } from "react-redux";
 import { Button } from "../Button/Button";
-import { useTask } from "../../contexts/taskContext";
+import css from "./TaskForm.module.css";
+import { addTask } from "../../redux/taskSlice";
 
 export const TaskForm = () => {
-  const { addTask } = useTask();
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
-
-    addTask(form.elements.text.value);
+    dispatch(addTask(form.elements.text.value));
     form.reset();
   };
+
   return (
     <form className={css.form} onSubmit={handleSubmit}>
       <input
@@ -21,7 +21,7 @@ export const TaskForm = () => {
         name="text"
         placeholder="Enter task text..."
       />
-      <Button type="submit">Add task</Button>{" "}
+      <Button type="submit">Add task</Button>
     </form>
   );
 };

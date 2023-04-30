@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
 import { Task } from "../Task/Task";
-import { getStatusFilter, getTasks } from "../../redux/selectors";
-import styles from "./TaskList.module.css";
+import { getTasks, getStatusFilter } from "../../redux/selectors";
+import css from "./TaskList.module.css";
 import { statusFilters } from "../../redux/constants";
-import { useFilter } from "../../contexts/filterContext";
-import { useTask } from "../../contexts/taskContext";
 
 const getVisibleTasks = (tasks, statusFilter) => {
   switch (statusFilter) {
@@ -18,16 +16,14 @@ const getVisibleTasks = (tasks, statusFilter) => {
 };
 
 export const TaskList = () => {
-  const { tasks } = useTask();
-
-  const { status } = useFilter();
-
-  const visibleTasks = getVisibleTasks(tasks, status);
+  const tasks = useSelector(getTasks);
+  const statusFilter = useSelector(getStatusFilter);
+  const visibleTasks = getVisibleTasks(tasks, statusFilter);
 
   return (
-    <ul className={styles.list}>
+    <ul className={css.list}>
       {visibleTasks.map((task) => (
-        <li className={styles.listItem} key={task.id}>
+        <li className={css.listItem} key={task.id}>
           <Task task={task} />
         </li>
       ))}

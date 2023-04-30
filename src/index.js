@@ -3,21 +3,22 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
-import { FilterProvider } from "./contexts/filterContext";
-import { TaskProvider } from "./contexts/taskContext";
+// import { store } from './redux/store';
+import { store } from "./examples/redux/slices/store";
+import { CounterProvider } from "./examples/contexts/counterContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <FilterProvider>
-        <TaskProvider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <CounterProvider>
           <App />
-        </TaskProvider>
-      </FilterProvider>
-    </Provider>
+        </CounterProvider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
